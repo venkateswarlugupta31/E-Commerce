@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shop/screens/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
   final String id;
@@ -14,6 +15,13 @@ class ProductItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
         child: GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (ctx) => ProductDetailScreen(title),
+              ),
+            );
+          },
           child: Image.network(
             imageUrl,
             fit: BoxFit.cover,
