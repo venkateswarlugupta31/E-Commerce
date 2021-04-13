@@ -59,6 +59,7 @@ class CartScreen extends StatelessWidget {
                 //cart.items[i].id,
                 //items is a map, need to convert to list
                 cart.items.values.toList()[i].id,
+                cart.items.keys.toList()[i],
                 cart.items.values.toList()[i].title,
                 cart.items.values.toList()[i].price,
                 cart.items.values.toList()[i].quantity,
