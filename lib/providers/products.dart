@@ -81,6 +81,7 @@ class Products with ChangeNotifier {
           description: prodData['description'],
           price: prodData['price'],
           imageUrl: prodData['imageUrl'],
+          isFavorite: prodData['isFavorite'],
         ));
       });
       _items = loadedProducts;
@@ -133,9 +134,8 @@ class Products with ChangeNotifier {
           {
             'title': newProduct.title,
             'description': newProduct.description,
-            'price': newProduct.price,
             'imageUrl': newProduct.imageUrl,
-            'isFavorite': newProduct.isFavorite,
+            'price': newProduct.price,
           },
         ),
       );
@@ -146,21 +146,19 @@ class Products with ChangeNotifier {
     }
   }
 
-  void removeProduct(String id) {
+  Future<void> removeProduct(String id) async {
     final url = Uri.parse(
         'https://flutter-shop-56318-default-rtdb.firebaseio.com/products/$id.json');
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
-    http.delete(url).then((response) {
-      if (response.statusCode >= 400) {
-        throw HttpException('Could not delete that product.');
-      }
-      existingProduct = null;
-    }).catchError((_) {
-      _items.insert(existingProductIndex, existingProduct);
-      notifyListeners();
-    });
     _items.removeAt(existingProductIndex);
     notifyListeners();
+    final response = await http.delete(url);
+    if (response.statusCode >= 400) {
+      _items.insert(existingProductIndex, existingProduct);
+      notifyListeners();
+      throw HttpException('Could not delete that product.');
+    }
+    existingProduct = null;
   }
 }
