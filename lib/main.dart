@@ -17,6 +17,22 @@ import './providers/auth.dart';
 
 void main() {
   runApp(MyApp());
+  // runApp(MySmallApp());
+}
+
+class MySmallApp extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Common Venkat'),
+        ),
+        body: Center(
+          child: Text('Hey Venkat, you can rock'),
+        ),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
